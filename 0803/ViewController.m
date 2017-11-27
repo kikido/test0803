@@ -60,6 +60,7 @@ typedef NS_ENUM(NSInteger, AAType){
    
     JSImageManager *manager = [JSImageManager shareManager];
     BOOL ss = [manager authorizationStatus];
+    NSLog(@"这是1.0.1版本")
     
     [self addViewThree];
 }
