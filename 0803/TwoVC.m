@@ -17,9 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.superview ? nil : [self.view addSubview:self.tableView];
+//    self.tableView.superview ? nil : [self.view addSubview:self.tableView];
     self.view.backgroundColor = [UIColor greenColor];
+    
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 50, 50)];
+    button.backgroundColor = [UIColor redColor];
+    [self.view addSubview:button];
+    [button addTarget:self action:@selector(aaa) forControlEvents:UIControlEventTouchUpInside];
     // Do any additional setup after loading the view.
+}
+
+- (void)aaa
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.navigationController popViewControllerAnimated:YES];
+    });
+    
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"测试" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertC addAction:[UIAlertAction actionWithTitle:@"确定" style:0 handler:nil]];
+    [self presentViewController:alertC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray<UIImage *> *originImageArray;
 @property (nonatomic, strong) PHImageManager *phImageManager;
 
+@property (nonatomic, strong) UIView *naviView;
 @property (nonatomic, strong) UIImageView *zoomView;
 @property (nonatomic, strong) UIScrollView *zoomScrollView;
 @property (nonatomic, assign, getter=isViewZoom) BOOL viewZoom;
@@ -48,11 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (!self.photoBrowserView.superview) [self.view addSubview:self.photoBrowserView];
     
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    self.photoBrowserView.contentOffset = CGPointMake(self.currentIndex * width, 0);
-    
+    [self jsp_creatUI];
     [self jsp_downloadOriginImage:self.currentIndex];
     [self jsp_initZoomViewWithIndex:self.currentIndex];
 }
@@ -72,6 +70,46 @@
 {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setHidden:NO];
+}
+
+- (void)jsp_creatUI
+{
+    if (!self.photoBrowserView.superview) [self.view addSubview:self.photoBrowserView];
+    
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    self.photoBrowserView.contentOffset = CGPointMake(self.currentIndex * width, 0);
+
+//navi
+    UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375., 64.)];
+    naviView.backgroundColor = [UIColor colorWithWhite:1. alpha:.8];
+    [self.view insertSubview:naviView aboveSubview:self.photoBrowserView];
+    self.naviView = naviView;
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:[UIImage imageNamed:@"back@2x"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(jsp_backAction) forControlEvents:UIControlEventTouchUpInside];
+    [naviView addSubview:backButton];
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(@0.);
+        make.left.equalTo(@15.);
+    }];
+    
+    UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [selectButton setImage:[UIImage imageNamed:@"icon_xin_allchoose"] forState:UIControlStateNormal];
+    [selectButton addTarget:self action:@selector(jsp_backAction) forControlEvents:UIControlEventTouchUpInside];
+    [naviView addSubview:selectButton];
+    [selectButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(@0.);
+        make.right.equalTo(@-15.);
+    }];
+    
+//Bottom
+    
+}
+
+- (void)jsp_backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 加载原图
@@ -149,7 +187,7 @@
 
 - (void)jsp_singalTapAction:(UITapGestureRecognizer *)tap
 {
-    
+    self.naviView.hidden = !self.naviView.isHidden;
 }
 
 - (void)jsp_doubleTapAction:(UITapGestureRecognizer *)tap

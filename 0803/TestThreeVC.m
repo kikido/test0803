@@ -45,35 +45,49 @@
 //    [self.view.layer addSublayer:shaperLayer];
     
    
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 120., 60.)];
-    [btn setImage:[UIImage imageNamed:@"dqh_add"] forState:UIControlStateNormal];
-    [btn setTitle:@"测试01" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor yellowColor];
+//    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 44.)];
+////    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setImage:[UIImage imageNamed:@"dqh_add"] forState:UIControlStateNormal];
+//    [btn setTitle:@"离线上传" forState:UIControlStateNormal];
+//    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    btn.backgroundColor = [UIColor yellowColor];
+//
+//    btn.titleLabel.font = [UIFont systemFontOfSize:7.];
+//    btn.imageView.backgroundColor = btn.backgroundColor;
+//
+//    CGSize titleSize = btn.titleLabel.bounds.size;
+//    CGSize imageSize = btn.imageView.bounds.size;
+//    CGFloat interval = 1.0;
+//
+////    [btn setTitleEdgeInsets:UIEdgeInsetsMake(imageSize.height + interval, -(imageSize.width + interval), 0, 0)];
+////    [btn setImageEdgeInsets:UIEdgeInsetsMake(0,0, titleSize.height + interval, -(titleSize.width + interval))];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    btn.titleLabel.font = [UIFont systemFontOfSize:15.];
-    btn.imageView.backgroundColor = btn.backgroundColor;
     
-    CGSize titleSize = btn.titleLabel.bounds.size;
-    CGSize imageSize = btn.imageView.bounds.size;
-    CGFloat interval = 1.0;
+    NSArray *aa = @[@1,@2,@3,@4,@5,@6];
+    NSArray *bb = @[@1,@2,@3,@4,@5,@7];
 
-    [btn setTitleEdgeInsets:UIEdgeInsetsMake(imageSize.height + interval, -(imageSize.width + interval), 0, 0)];
-    [btn setImageEdgeInsets:UIEdgeInsetsMake(0,0, titleSize.height + interval, -(titleSize.width + interval))];
     
-    [self.view addSubview:btn];
+    
+    for (NSNumber *numberA in aa) {
+        
+        BOOL isSame = NO;
+        for (NSNumber *numberB in bb) {
+            if ([numberA integerValue] == [numberB integerValue]) {
+                NSLog(@"%@相同，已删除",numberA);
+                isSame = YES;
+                continue;
+            }
+            break;
+        }
+    }
+    
+
 }
 
 - (void)testNet
 {
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.kikido.upload01"];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config
-                                                          delegate:self
-                                                     delegateQueue:[NSOperationQueue mainQueue]];
     
-    NSURLSessionUploadTask *task = [session uploadTaskWithRequest:<#(nonnull NSURLRequest *)#> fromData:<#(nullable NSData *)#> completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        <#code#>
-    }]
 }
 
 - (void)didReceiveMemoryWarning {

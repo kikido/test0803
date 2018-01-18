@@ -16,7 +16,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import "JSImageManager.h"
 #import "TestTwoVC.h"
+#import <FMDB.h>
 #import "TestThreeVC.h"
+#import "AnychatLoginVC.h"
+#import "JSWaterView.h"
+#import "RecordVideoVC.h"
 
 
 
@@ -47,6 +51,7 @@ typedef NS_ENUM(NSInteger, AAType){
 //
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) UIView *waterView;
 @end
 
 @implementation ViewController
@@ -57,16 +62,46 @@ typedef NS_ENUM(NSInteger, AAType){
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"测试";
     
-   
     JSImageManager *manager = [JSImageManager shareManager];
     BOOL ss = [manager authorizationStatus];
-    NSLog(@"这是1.0.1版本")
+    NSLog(@"这是1.0.1版本");
+
+    NSDictionary *dic = @{@"aa" : @{@"cc" : @"ss"}};
+    for (NSDictionary *ss in dic[@"aa"][@"bb"]) {
+        NSLog(@"%@",ss);
+    }
+    NSLog(@"dic = %@",dic[@"aa"][@"bb"]);
     
-    [self addViewThree];
+//    for (NSInteger i = 0; i < 5; i++) {
+//        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(0, 100*i, 300, 70)];
+//        tf.backgroundColor = [UIColor redColor];
+//        [self.view addSubview:tf];
+//    }
+    
+    
+//    [self getData];
+//    [self addViewThree];
+}
+
+- (void)getData
+{
+    NSString *aa = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/photo.sqlite"];
+    FMDatabaseQueue *databaseQueue = [FMDatabaseQueue databaseQueueWithPath:aa];
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        BOOL ss = [db executeUpdate:@"create table if not exists t_book (bookName text);"];
+        NSLog(@"ss = %d,%@",ss,aa);
+        
+        for (NSInteger i=0; i < 10; i++) {
+            [db executeUpdate:@"insert into t_book (bookName) values('ceshi');"];
+        }
+    }];
 }
 
 - (void)addViewThree
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 100., 40., 40.)];
     button.backgroundColor = [UIColor blackColor];
     [button setTitle:@"ss" forState:UIControlStateNormal];
@@ -75,19 +110,119 @@ typedef NS_ENUM(NSInteger, AAType){
     
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
 //        SystemPhotoVC *vc = [SystemPhotoVC new];
-//        TestSSVC *vc = [TestSSVC new];
 //        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[TestTwoVC new]];
 //        [self presentViewController:nav animated:YES completion:nil];
 //        TestTwoVC *vc = [TestTwoVC new];
-        TestThreeVC *vc = [TestThreeVC new];
-        [self.navigationController pushViewController:vc animated:NO];
+        
+        RecordVideoVC *vc = [[RecordVideoVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+//        TwoVC *two = [[TwoVC alloc] init];
+//        [self.navigationController pushViewController:two animated:YES];
+//        return;
+//
+//
+//        TestThreeVC *vc = [TestThreeVC new];
+//        [self.navigationController pushViewController:vc animated:NO];
+        
 //        NSURL *url = [NSURL URLWithString:@"app-prefs:root=Photos"];//UIApplicationOpenSettingsURLString
 //        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];//UIApplicationOpenSettingsURLString
 //        if ([[UIApplication sharedApplication] canOpenURL:url]) {
 //            [[UIApplication sharedApplication] openURL:url];
 //        }
+//        NSString *aa = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/photo.sqlite"];
+//        FMDatabaseQueue *databaseQueue = [FMDatabaseQueue databaseQueueWithPath:aa];
+//
+//        [databaseQueue inDatabase:^(FMDatabase *db) {
+//
+//            FMResultSet *set = [db executeQuery:@"select * from t_book where bookName like ?;",@"%%ceshi%%"];
+//            while ([set next]) {
+//                NSLog(@"hahah");
+//            }
+//            NSLog(@"jieshu");
+//
+//        }];
+        
     }];
+    
+    UIButton *abutton = [[UIButton alloc] initWithFrame:CGRectMake(100, 100., 40., 40.)];
+    abutton.backgroundColor = [UIColor blackColor];
+    [abutton setTitle:@"ss" forState:UIControlStateNormal];
+    [abutton setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
+    [abutton addTarget:self action:@selector(bbbbb:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:abutton];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(50, 200, 300, 100)];
+    view.backgroundColor = [UIColor whiteColor];
+    view.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+    view.layer.shadowOffset = CGSizeMake(5,5);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    view.layer.shadowOpacity = 0.8;//阴影透明度，默认0
+    view.layer.shadowRadius = 4;//阴影半径，默认3
+    self.view.backgroundColor = [UIColor redColor];
+    
+    [self.view addSubview:view];
 }
+
+- (void)bbbbb:(UIButton *)sender
+{
+
+    NSString *text = @"测试label测试label测试label测试label测试label测试label测试label测试label测试label测试label测试label";
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100., 200., 100, 40.)];
+    label.backgroundColor = [UIColor redColor];
+    label.numberOfLines = 0;
+    label.text = text;
+    [label sizeToFit];
+    [self.view addSubview:label];
+
+    
+//    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:18.]};
+//    CGSize retSize = [text boundingRectWithSize:CGSizeMake(100, 1000)
+//                                        options:\
+//                      NSStringDrawingTruncatesLastVisibleLine |
+//                      NSStringDrawingUsesLineFragmentOrigin |
+//                      NSStringDrawingUsesFontLeading
+//                                     attributes:attribute
+//                                        context:nil].size;
+//
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100., 200., retSize.width, retSize.height)];
+//    label.backgroundColor = [UIColor redColor];
+//    label.numberOfLines = 0;
+//    label.text = text;
+//    [self.view addSubview:label];
+    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100., 200., 0, 0)];
+//    label.backgroundColor = [UIColor redColor];
+//    label.text = text;
+//    label.numberOfLines = 0;
+//    CGSize ss = [label sizeThatFits:CGSizeMake(100, 1000)];
+//    label.frame = CGRectMake(100., 200., ss.width, ss.height);
+//    [self.view addSubview:label];
+
+}
+
+- (void)clickAnimation:(id)sender {
+    __block JSWaterView *waterView = [[JSWaterView alloc]initWithFrame:CGRectMake(100, 300, 200, 200)];
+    
+    waterView.backgroundColor = [UIColor clearColor];
+    
+    [self.view insertSubview:waterView belowSubview:self.waterView];
+    [self.view addSubview:waterView];
+    
+    
+    [UIView animateWithDuration:1.5 animations:^{
+        
+        waterView.transform = CGAffineTransformScale(waterView.transform, 2, 2);
+        
+        waterView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        [waterView removeFromSuperview];
+    }];
+    
+}
+
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;      // called when scroll view grinds to a halt
 {
