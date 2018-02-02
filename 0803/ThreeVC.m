@@ -7,6 +7,9 @@
 //
 
 #import "ThreeVC.h"
+#import "FourVC.h"
+#import "RDVTabBarController.h"
+
 
 @interface ThreeVC ()
 
@@ -18,7 +21,26 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor redColor];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    button.backgroundColor = [UIColor blackColor];
+    [button addTarget:self action:@selector(aa:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.rdv_tabBarController.tabBarHidden) {
+        [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    }
+}
+
+- (void)aa:(UIButton *)sender
+{
+    FourVC *vc = [[FourVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -36,9 +36,8 @@
     [super viewDidAppear:animated];
     
 //    self.arSCNView.superview ? nil : [self.view addSubview:self.arSCNView];
-    [self.view addSubview:self.arSCNView];
-    
-    [self.arSession runWithConfiguration:self.arConfiguration];
+//    [self.view addSubview:self.arSCNView];    
+//    [self.arSession runWithConfiguration:self.arConfiguration];
     
 //    NSBundle *bundle = [NSBundle mainBundle];
 //    NSString *path = [bundle pathForResource:@"ship.scn" ofType:@"scn"];

@@ -9,9 +9,15 @@
 #import "AppDelegate.h"
 #import "RootNavigationController.h"
 #import "ViewController.h"
+#import "RDVTabBarController.h"
+#import "RDVTabBarItem.h"
 
-@interface AppDelegate ()
+#import "OneVC.h"
+#import "TwoVC.h"
+#import "ThreeVC.h"
 
+@interface AppDelegate () <RDVTabBarControllerDelegate>
+@property (strong, nonatomic) UIViewController *viewController;
 @end
 
 @implementation AppDelegate
@@ -20,19 +26,95 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//
+//    self.window.backgroundColor = [UIColor whiteColor];
+//
+//    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:[ViewController new]];
+//    self.window.rootViewController = nav;
+//
+//    [self.window makeKeyAndVisible];
     
-    self.window.backgroundColor = [UIColor whiteColor];
-    
-    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:[ViewController new]];
-    self.window.rootViewController = nav;
-    
-    [self.window makeKeyAndVisible];
+    [self setRootController];
     
     
     
     return YES;
 }
+
+
+- (void)setRootController
+{
+    RootNavigationController *home = [[RootNavigationController alloc] initWithRootViewController:[[OneVC alloc] init]];
+    RootNavigationController *xindai = [[RootNavigationController alloc] initWithRootViewController:[[TwoVC alloc] init]];
+    //    RootNavigationViewController *baoquan = [[RootNavigationViewController alloc] initWithRootViewController:[[BaoQuanVC alloc] init]];
+    RootNavigationController *user = [[RootNavigationController alloc] initWithRootViewController:[[ThreeVC alloc] init]];
+    
+    RDVTabBarController *tabbarVC = [[RDVTabBarController alloc] init];
+    tabbarVC.viewControllers = @[home,xindai/*,baoquan*/,user];
+    tabbarVC.delegate = self;
+    self.viewController = tabbarVC;
+    
+    [self customizeTabBarForController:tabbarVC];
+    [self setRoot];
+}
+
+- (void)customizeTabBarForController:(RDVTabBarController *)tabBarController
+{
+    //    NSArray *tabBarItemImages = @[@"icon_table1.png",@"icon_table2.png",@"icon_table3.png",@"icon_table4.png"];
+    //    NSArray *selectedImages = @[@"icon_table1_press.png",@"icon_table2_press.png",@"icon_table3_press.png",@"icon_table4_press.png"];
+    NSArray *tabBarItemImages = @[@"icon_table1.png",@"icon_table2.png",@"icon_table4.png"];
+    NSArray *selectedImages = @[@"icon_table1_press.png",@"icon_table2_press.png",@"icon_table4_press.png"];
+    
+    
+    NSInteger index = 0;
+    tabBarController.tabBar.translucent = NO;
+
+    
+    for (RDVTabBarItem *item in tabBarController.tabBar.items)
+    {
+        UIImage *selectedimage = [UIImage imageNamed:[selectedImages objectAtIndex:index]];
+        UIImage *unselectedimage = [UIImage imageNamed:[tabBarItemImages objectAtIndex:index]];
+        [item setFinishedSelectedImage:selectedimage withFinishedUnselectedImage:unselectedimage];
+        
+        UIColor *sel = [UIColor redColor];
+        UIColor *unsel = [UIColor grayColor];
+        
+        NSDictionary *unseleAtrr = @{
+                                     NSFontAttributeName: [UIFont systemFontOfSize:11.],//修改过的字体
+                                     NSForegroundColorAttributeName: unsel
+                                     };
+        NSDictionary *seleAtrr = @{
+                                   NSFontAttributeName: [UIFont systemFontOfSize:11.],
+                                   NSForegroundColorAttributeName: sel,
+                                   };
+        [item setUnselectedTitleAttributes:unseleAtrr];
+        [item setSelectedTitleAttributes:seleAtrr];
+        [item setTitle:@[@"首页",@"信贷"/*,@"保全"*/,@"我的"][index]];
+        [item setTitlePositionAdjustment:UIOffsetMake(0, 5)];
+        index++;
+    }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0., 0.5)];
+    view.backgroundColor = [UIColor blackColor];
+    [tabBarController.tabBar.backgroundView addSubview:view];
+    
+    
+    if (isIphoneX) {
+        [tabBarController.tabBar setHeight:83];
+        [tabBarController.tabBar setContentEdgeInsets:UIEdgeInsetsMake(18, 0, 0, 0)];
+    }
+}
+
+- (void)setRoot
+{
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    nav.navigationBar.hidden = YES;
+    
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
