@@ -47,15 +47,8 @@
 //    SCNScene *ss = [SCNScene sceneWithURL:url options:nil error:nil];
 //
 //    SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/ship.scn"];
-    NSLog(@"版本03");
-    
-<<<<<<< HEAD
-    NSLog(@"hhahaha");
-    NSLog(@"分支01");
-=======
-    NSLog(@"第二个分支");
-    
->>>>>>> dev
+    NSLog(@"版本04");
+
 //    NSString *ss = @"这是测试";
 //
 //    NSData *dd = [ss dataUsingEncoding:NSUTF8StringEncoding];
