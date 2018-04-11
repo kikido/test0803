@@ -49,6 +49,7 @@
 //    SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/ship.scn"];
     NSLog(@"版本02");
     
+    NSLog(@"分支01");
 //    NSString *ss = @"这是测试";
 //
 //    NSData *dd = [ss dataUsingEncoding:NSUTF8StringEncoding];
