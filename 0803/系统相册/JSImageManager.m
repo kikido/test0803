@@ -8,11 +8,6 @@
 
 #import "JSImageManager.h"
 
-#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
-#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
-#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 @interface JSImageManager()
 @property (nonatomic, strong) PHImageManager *imageManager;
@@ -30,7 +25,7 @@ CGSize const JSImageManagerHeadImageSize = {60., 80.};
     dispatch_once(&onceToken, ^{
         if (manager == nil) {
             manager = [[super allocWithZone:NULL] init];
-            
+            manager.allowMorePhotoes = YES;
         }
     });
     return manager;

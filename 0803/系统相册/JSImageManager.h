@@ -16,6 +16,8 @@
 //当做头像时的大小
 extern CGSize const JSImageManagerHeadImageSize;
 
+@property (nonatomic, assign, getter=isAllowMorePhotoes) BOOL allowMorePhotoes;
+
 + (instancetype)shareManager;
 
 - (BOOL)authorizationStatus;

@@ -22,6 +22,8 @@
 @property (nonatomic, strong) ARSession *arSession;
 @property (nonatomic, strong) ARConfiguration *arConfiguration;
 @property (nonatomic, strong) SCNNode *planeNode;
+
+@property (nonatomic, strong) MASConstraint *width;
 @end
 
 @implementation OneVC
@@ -45,7 +47,15 @@
 //    SCNScene *ss = [SCNScene sceneWithURL:url options:nil error:nil];
 //
 //    SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/ship.scn"];
-    NSLog(@"版本2");
+    NSLog(@"版本01");
+    
+//    NSString *ss = @"这是测试";
+//
+//    NSData *dd = [ss dataUsingEncoding:NSUTF8StringEncoding];
+//
+//    NSData *cc = [dd base64EncodedDataWithOptions:NSDataBase64Encoding64CharacterLineLength];
+//
+//    NSLog(@"cc = %@\n dd=%@",dd,cc);
 }
 
 

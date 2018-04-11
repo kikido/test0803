@@ -7,6 +7,7 @@
 //
 
 #import "TwoVC.h"
+#import "VideoTestViewController.h"
 
 @interface TwoVC () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -30,13 +31,15 @@
 
 - (void)aaa
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.navigationController popViewControllerAnimated:YES];
-    });
-    
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"测试" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertC addAction:[UIAlertAction actionWithTitle:@"确定" style:0 handler:nil]];
-    [self presentViewController:alertC animated:YES completion:nil];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    });
+//    
+//    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"测试" message:nil preferredStyle:UIAlertControllerStyleAlert];
+//    [alertC addAction:[UIAlertAction actionWithTitle:@"确定" style:0 handler:nil]];
+//    [self presentViewController:alertC animated:YES completion:nil];
+    VideoTestViewController *vc = [[VideoTestViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

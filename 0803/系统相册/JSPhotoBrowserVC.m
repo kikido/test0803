@@ -9,10 +9,6 @@
 #import "JSPhotoBrowserVC.h"
 #import <Photos/Photos.h>
 
-#define ScreenWidth ([UIScreen mainScreen].bounds.size.width)
-#define ScreenHeight ([UIScreen mainScreen].bounds.size.height)
-
-
 @interface JSPhotoBrowserVC () <UIScrollViewDelegate>
 @property (nonatomic, copy) NSArray *assetArray;
 @property (nonatomic, assign, readonly) NSInteger currentIndex;
@@ -144,8 +140,8 @@
             [self jsp_addGestureRecognizerForView:imageView];
             
             [self.phImageManager requestImageForAsset:currentAsset
-//                                           targetSize:PHImageManagerMaximumSize/*CGSizeMake(width, height)*/
-                                           targetSize:CGSizeMake(width, height)
+                                           targetSize:PHImageManagerMaximumSize
+//                                           targetSize:CGSizeMake(width, height)
                                           contentMode:PHImageContentModeDefault
                                               options:requestOptions
                                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -224,7 +220,7 @@
     UIImageView *imageView = [self.photoBrowserView viewWithTag:100 + imageIndex];
     _zoomView = imageView;
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(_currentIndex * ScreenWidth, 0., ScreenWidth, ScreenHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(_currentIndex * SCREEN_WIDTH, 0., SCREEN_WIDTH, SCREEN_HEIGHT)];
     scrollView.pagingEnabled = NO;
     scrollView.minimumZoomScale = 1;
     scrollView.maximumZoomScale = 2;
@@ -238,7 +234,7 @@
     
     [imageView removeFromSuperview];
     [self.photoBrowserView addSubview:scrollView];
-    imageView.frame = CGRectMake(0., 0, ScreenWidth, ScreenHeight);
+    imageView.frame = CGRectMake(0., 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [scrollView addSubview:imageView];
 }
 
@@ -261,7 +257,7 @@
 {
     if (scrollView != self.photoBrowserView) return;
     
-    CGFloat offCoungF = scrollView.contentOffset.x / ScreenWidth;
+    CGFloat offCoungF = scrollView.contentOffset.x / SCREEN_WIDTH;
     NSLog(@"停止滑动了，偏差量：%.2f",offCoungF);
     
     if (fabs(_currentIndex- offCoungF) > .5) {
@@ -274,7 +270,7 @@
 {
     if (scrollView != self.photoBrowserView) return;
     
-    CGFloat offCoungF = scrollView.contentOffset.x / ScreenWidth;
+    CGFloat offCoungF = scrollView.contentOffset.x / SCREEN_WIDTH;
     
     if (_currentIndex - offCoungF > .5000000) {
         if (self.isViewZoom) {
@@ -327,9 +323,9 @@
 - (UIScrollView *)photoBrowserView
 {
     if (_photoBrowserView == nil) {
-        _photoBrowserView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        _photoBrowserView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         _photoBrowserView.delegate = self;
-        _photoBrowserView.contentSize = CGSizeMake(ScreenWidth * self.assetArray.count, 0);
+        _photoBrowserView.contentSize = CGSizeMake(SCREEN_WIDTH * self.assetArray.count, 0);
         _photoBrowserView.pagingEnabled = YES;
         _photoBrowserView.showsHorizontalScrollIndicator = NO;
         _photoBrowserView.backgroundColor = [UIColor yellowColor];

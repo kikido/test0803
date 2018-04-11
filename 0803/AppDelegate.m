@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "RootNavigationController.h"
-#import "ViewController.h"
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 
